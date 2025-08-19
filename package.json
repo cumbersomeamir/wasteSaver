@@ -1,0 +1,22 @@
+{
+  "name": "waste-saver",
+  "version": "1.0.0",
+  "description": "A clean, impactful food-rescue app that connects users with surplus food deals",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:mobile\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:mobile": "cd mobile && npm run dev",
+    "install:all": "npm install && cd server && npm install && cd ../mobile && npm install",
+    "test": "concurrently \"npm run test:server\" \"npm run test:mobile\"",
+    "test:server": "cd server && npm test",
+    "test:mobile": "cd mobile && npm test",
+    "build": "cd mobile && npm run build"
+  },
+  "keywords": ["food-rescue", "sustainability", "react-native", "nodejs"],
+  "author": "WasteSaver Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
