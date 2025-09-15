@@ -92,6 +92,12 @@ export const COLORS = {
   waterSaved: '#2196F3',
   moneySaved: '#FF9800',
   
+  // Gradient colors
+  gradientPrimary: ['#4CAF50', '#66BB6A'],
+  gradientSecondary: ['#FF9800', '#FFB74D'],
+  gradientAccent: ['#2196F3', '#64B5F6'],
+  gradientSuccess: ['#4CAF50', '#81C784'],
+  
   // Category colors
   bakery: '#FF9800',
   restaurant: '#F44336',
@@ -254,6 +260,15 @@ export const ANIMATIONS = {
   spring: {
     tension: 100,
     friction: 8
+  },
+  
+  // Micro-interactions
+  pressIn: 0.95,
+  pressOut: 1.0,
+  scale: {
+    small: 0.95,
+    medium: 0.98,
+    large: 1.02
   }
 };
 

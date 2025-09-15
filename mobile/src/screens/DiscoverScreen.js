@@ -94,6 +94,7 @@ const DiscoverScreen = ({ navigation }) => {
       key={bag.id}
       style={styles.bagCard}
       onPress={() => navigation.navigate('RescueBagDetail', { bagId: bag.id })}
+      activeOpacity={0.9}
     >
       <View style={styles.bagHeader}>
         <View style={styles.bagInfo}>
@@ -127,7 +128,7 @@ const DiscoverScreen = ({ navigation }) => {
             {Math.round(((bag.originalPrice - bag.price) / bag.originalPrice) * 100)}% OFF
           </Text>
         </View>
-        <TouchableOpacity style={styles.reserveButton}>
+        <TouchableOpacity style={styles.reserveButton} activeOpacity={0.8}>
           <Text style={styles.reserveButtonText}>Reserve Now</Text>
         </TouchableOpacity>
       </View>
@@ -188,13 +189,24 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     backgroundColor: COLORS.white,
-    borderRadius: SIZES.radius,
-    paddingHorizontal: SPACING.md,
+    borderRadius: SIZES.radius * 1.5,
+    paddingHorizontal: SPACING.lg,
     paddingVertical: SPACING.md,
     fontSize: SIZES.body,
     fontFamily: FONTS.regular,
     borderWidth: 1,
     borderColor: COLORS.border,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   categoryScroll: {
     marginBottom: SPACING.md,
@@ -204,17 +216,39 @@ const styles = StyleSheet.create({
   },
   categoryButton: {
     alignItems: 'center',
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.md,
     marginRight: SPACING.sm,
-    borderRadius: SIZES.radius,
+    borderRadius: SIZES.radius * 1.5,
     backgroundColor: COLORS.white,
     borderWidth: 1,
     borderColor: COLORS.border,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   categoryButtonActive: {
     backgroundColor: COLORS.primary,
     borderColor: COLORS.primary,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.primary,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   categoryIcon: {
     fontSize: 20,
@@ -236,18 +270,18 @@ const styles = StyleSheet.create({
   },
   bagCard: {
     backgroundColor: COLORS.white,
-    borderRadius: SIZES.radius,
-    padding: SPACING.md,
+    borderRadius: SIZES.radius * 1.2,
+    padding: SPACING.lg,
     marginBottom: SPACING.md,
     ...Platform.select({
       ios: {
         shadowColor: COLORS.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.12,
+        shadowRadius: 6,
       },
       android: {
-        elevation: 4,
+        elevation: 5,
       },
     }),
   },
@@ -324,8 +358,19 @@ const styles = StyleSheet.create({
   reserveButton: {
     backgroundColor: COLORS.primary,
     paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.sm,
-    borderRadius: SIZES.radius,
+    paddingVertical: SPACING.md,
+    borderRadius: SIZES.radius * 1.2,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.primary,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
   },
   reserveButtonText: {
     fontSize: SIZES.body,

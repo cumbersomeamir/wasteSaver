@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   Platform,
   Dimensions,
+  Animated,
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 import { COLORS, FONTS, SIZES, SPACING } from '../constants/theme';
@@ -55,10 +56,13 @@ const HomeScreen = ({ navigation }) => {
   const renderQuickAction = (action, index) => (
     <TouchableOpacity
       key={index}
-      style={[styles.actionCard, { backgroundColor: action.color + '20' }]}
+      style={[styles.actionCard, { backgroundColor: action.color + '15' }]}
       onPress={action.onPress}
+      activeOpacity={0.8}
     >
-      <Text style={styles.actionIcon}>{action.icon}</Text>
+      <View style={[styles.actionIconContainer, { backgroundColor: action.color + '20' }]}>
+        <Text style={styles.actionIcon}>{action.icon}</Text>
+      </View>
       <Text style={styles.actionTitle}>{action.title}</Text>
       <Text style={styles.actionSubtitle}>{action.subtitle}</Text>
     </TouchableOpacity>
@@ -66,17 +70,29 @@ const HomeScreen = ({ navigation }) => {
 
   const renderImpactCard = () => (
     <View style={styles.impactCard}>
-      <Text style={styles.impactTitle}>Your Impact This Month</Text>
+      <View style={styles.impactHeader}>
+        <Text style={styles.impactTitle}>Your Impact This Month</Text>
+        <Text style={styles.impactSubtitle}>Making a difference, one rescue at a time</Text>
+      </View>
       <View style={styles.impactStats}>
         <View style={styles.impactStat}>
+          <View style={[styles.impactStatIcon, { backgroundColor: COLORS.moneySaved + '20' }]}>
+            <Text style={styles.impactStatIconText}>💰</Text>
+          </View>
           <Text style={styles.impactValue}>${user?.totalSaved || 0}</Text>
           <Text style={styles.impactLabel}>Money Saved</Text>
         </View>
         <View style={styles.impactStat}>
+          <View style={[styles.impactStatIcon, { backgroundColor: COLORS.co2Saved + '20' }]}>
+            <Text style={styles.impactStatIconText}>🌱</Text>
+          </View>
           <Text style={styles.impactValue}>{user?.totalCO2eSaved || 0}kg</Text>
           <Text style={styles.impactLabel}>CO₂ Saved</Text>
         </View>
         <View style={styles.impactStat}>
+          <View style={[styles.impactStatIcon, { backgroundColor: COLORS.waterSaved + '20' }]}>
+            <Text style={styles.impactStatIconText}>💧</Text>
+          </View>
           <Text style={styles.impactValue}>{user?.totalWaterSaved || 0}L</Text>
           <Text style={styles.impactLabel}>Water Saved</Text>
         </View>
@@ -145,21 +161,33 @@ const styles = StyleSheet.create({
     paddingBottom: SPACING.md,
   },
   greeting: {
-    fontSize: SIZES.title2,
+    fontSize: SIZES.title1,
     fontFamily: FONTS.bold,
     color: COLORS.textPrimary,
     marginBottom: SPACING.xs,
   },
   subtitle: {
     fontSize: SIZES.body,
-    fontFamily: FONTS.regular,
+    fontFamily: FONTS.medium,
     color: COLORS.textSecondary,
+    opacity: 0.8,
   },
   logoutButton: {
-    paddingHorizontal: SPACING.md,
+    paddingHorizontal: SPACING.lg,
     paddingVertical: SPACING.sm,
-    borderRadius: SIZES.radius,
+    borderRadius: SIZES.radius * 1.2,
     backgroundColor: COLORS.lightGray,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   logoutText: {
     fontSize: SIZES.body,
@@ -171,24 +199,34 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.lg,
     padding: SPACING.lg,
     backgroundColor: COLORS.white,
-    borderRadius: SIZES.radius,
+    borderRadius: SIZES.radius * 1.5,
     ...Platform.select({
       ios: {
         shadowColor: COLORS.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
       },
       android: {
-        elevation: 4,
+        elevation: 6,
       },
     }),
+  },
+  impactHeader: {
+    alignItems: 'center',
+    marginBottom: SPACING.lg,
   },
   impactTitle: {
     fontSize: SIZES.title3,
     fontFamily: FONTS.bold,
     color: COLORS.textPrimary,
-    marginBottom: SPACING.md,
+    marginBottom: SPACING.xs,
+    textAlign: 'center',
+  },
+  impactSubtitle: {
+    fontSize: SIZES.caption1,
+    fontFamily: FONTS.regular,
+    color: COLORS.textSecondary,
     textAlign: 'center',
   },
   impactStats: {
@@ -197,6 +235,18 @@ const styles = StyleSheet.create({
   },
   impactStat: {
     alignItems: 'center',
+    flex: 1,
+  },
+  impactStatIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: SPACING.sm,
+  },
+  impactStatIconText: {
+    fontSize: 20,
   },
   impactValue: {
     fontSize: SIZES.title2,
@@ -228,14 +278,32 @@ const styles = StyleSheet.create({
   },
   actionCard: {
     width: (width - SPACING.screenPadding * 2 - SPACING.md) / 2,
-    padding: SPACING.md,
-    borderRadius: SIZES.radius,
+    padding: SPACING.lg,
+    borderRadius: SIZES.radius * 1.2,
     alignItems: 'center',
     marginBottom: SPACING.md,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
+  },
+  actionIconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: SPACING.sm,
   },
   actionIcon: {
-    fontSize: 32,
-    marginBottom: SPACING.sm,
+    fontSize: 24,
   },
   actionTitle: {
     fontSize: SIZES.body,
