@@ -98,6 +98,17 @@ export const COLORS = {
   gradientAccent: ['#2196F3', '#64B5F6'],
   gradientSuccess: ['#4CAF50', '#81C784'],
   
+  // Status indicators
+  statusAvailable: '#4CAF50',
+  statusLimited: '#FF9800',
+  statusUnavailable: '#F44336',
+  statusPending: '#2196F3',
+  
+  // Background variations
+  backgroundLight: '#F8F9FA',
+  backgroundCard: '#FFFFFF',
+  backgroundOverlay: 'rgba(0, 0, 0, 0.05)',
+  
   // Category colors
   bakery: '#FF9800',
   restaurant: '#F44336',

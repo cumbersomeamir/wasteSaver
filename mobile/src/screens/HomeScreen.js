@@ -125,8 +125,12 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Recent Activity</Text>
           <View style={styles.activityCard}>
+            <Text style={styles.activityIcon}>📦</Text>
             <Text style={styles.activityText}>No recent activity</Text>
             <Text style={styles.activitySubtext}>Start by finding your first rescue bag!</Text>
+            <TouchableOpacity style={styles.exploreButton} onPress={() => navigation.navigate('Discover')}>
+              <Text style={styles.exploreButtonText}>Explore Now</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -320,63 +324,94 @@ const styles = StyleSheet.create({
   },
   activityCard: {
     marginHorizontal: SPACING.screenPadding,
-    padding: SPACING.lg,
+    padding: SPACING.xl,
     backgroundColor: COLORS.white,
-    borderRadius: SIZES.radius,
+    borderRadius: SIZES.radius * 1.5,
     alignItems: 'center',
     ...Platform.select({
       ios: {
         shadowColor: COLORS.shadow,
-        shadowOffset: { width: 0, height: 1 },
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
-        shadowRadius: 2,
+        shadowRadius: 4,
       },
       android: {
-        elevation: 2,
+        elevation: 3,
       },
     }),
   },
+  activityIcon: {
+    fontSize: 48,
+    marginBottom: SPACING.md,
+    opacity: 0.6,
+  },
   activityText: {
-    fontSize: SIZES.body,
-    fontFamily: FONTS.medium,
+    fontSize: SIZES.title3,
+    fontFamily: FONTS.bold,
     color: COLORS.textSecondary,
-    marginBottom: SPACING.xs,
+    marginBottom: SPACING.sm,
   },
   activitySubtext: {
-    fontSize: SIZES.caption1,
+    fontSize: SIZES.body,
     fontFamily: FONTS.regular,
     color: COLORS.textHint,
     textAlign: 'center',
+    marginBottom: SPACING.lg,
+    lineHeight: 22,
+  },
+  exploreButton: {
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.md,
+    borderRadius: SIZES.radius * 1.5,
+    ...Platform.select({
+      ios: {
+        shadowColor: COLORS.primary,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
+  },
+  exploreButtonText: {
+    fontSize: SIZES.body,
+    fontFamily: FONTS.bold,
+    color: COLORS.white,
   },
   tipCard: {
     marginHorizontal: SPACING.screenPadding,
     padding: SPACING.lg,
-    backgroundColor: COLORS.white,
-    borderRadius: SIZES.radius,
+    backgroundColor: COLORS.accent + '10',
+    borderRadius: SIZES.radius * 1.5,
     flexDirection: 'row',
     alignItems: 'center',
+    borderLeftWidth: 4,
+    borderLeftColor: COLORS.accent,
     ...Platform.select({
       ios: {
         shadowColor: COLORS.shadow,
-        shadowOffset: { width: 0, height: 1 },
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
-        shadowRadius: 2,
+        shadowRadius: 4,
       },
       android: {
-        elevation: 2,
+        elevation: 3,
       },
     }),
   },
   tipIcon: {
-    fontSize: 24,
+    fontSize: 28,
     marginRight: SPACING.md,
   },
   tipText: {
     fontSize: SIZES.body,
-    fontFamily: FONTS.regular,
-    color: COLORS.textSecondary,
+    fontFamily: FONTS.medium,
+    color: COLORS.textPrimary,
     flex: 1,
-    lineHeight: 20,
+    lineHeight: 22,
   },
 });
 

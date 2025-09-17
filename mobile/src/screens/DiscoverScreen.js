@@ -14,6 +14,7 @@ import { COLORS, FONTS, SIZES, SPACING } from '../constants/theme';
 const DiscoverScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isLoading, setIsLoading] = useState(false);
 
   const categories = [
     { id: 'all', name: 'All', icon: '🍽️' },
@@ -73,7 +74,13 @@ const DiscoverScreen = ({ navigation }) => {
             styles.categoryButton,
             selectedCategory === category.id && styles.categoryButtonActive,
           ]}
-          onPress={() => setSelectedCategory(category.id)}
+          onPress={() => {
+            setSelectedCategory(category.id);
+            setIsLoading(true);
+            // Simulate loading
+            setTimeout(() => setIsLoading(false), 500);
+          }}
+          activeOpacity={0.7}
         >
           <Text style={styles.categoryIcon}>{category.icon}</Text>
           <Text
@@ -155,7 +162,17 @@ const DiscoverScreen = ({ navigation }) => {
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.bagsContainer}>
-          {mockRescueBags.map((bag) => renderRescueBag(bag))}
+          {mockRescueBags.length > 0 ? (
+            mockRescueBags.map((bag) => renderRescueBag(bag))
+          ) : (
+            <View style={styles.emptyState}>
+              <Text style={styles.emptyStateIcon}>🔍</Text>
+              <Text style={styles.emptyStateTitle}>No rescue bags found</Text>
+              <Text style={styles.emptyStateSubtitle}>
+                Try adjusting your search or check back later for new deals!
+              </Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -376,6 +393,30 @@ const styles = StyleSheet.create({
     fontSize: SIZES.body,
     fontFamily: FONTS.medium,
     color: COLORS.white,
+  },
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: SPACING.xxl,
+    paddingHorizontal: SPACING.lg,
+  },
+  emptyStateIcon: {
+    fontSize: 64,
+    marginBottom: SPACING.lg,
+    opacity: 0.6,
+  },
+  emptyStateTitle: {
+    fontSize: SIZES.title3,
+    fontFamily: FONTS.bold,
+    color: COLORS.textPrimary,
+    marginBottom: SPACING.sm,
+    textAlign: 'center',
+  },
+  emptyStateSubtitle: {
+    fontSize: SIZES.body,
+    fontFamily: FONTS.regular,
+    color: COLORS.textSecondary,
+    textAlign: 'center',
+    lineHeight: 22,
   },
 });
 
