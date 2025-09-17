@@ -105,7 +105,14 @@ const DiscoverScreen = ({ navigation }) => {
     >
       <View style={styles.bagHeader}>
         <View style={styles.bagInfo}>
-          <Text style={styles.bagTitle}>{bag.title}</Text>
+          <View style={styles.bagTitleContainer}>
+            <Text style={styles.bagTitle}>{bag.title}</Text>
+            <View style={[styles.categoryBadge, { backgroundColor: COLORS[bag.category] + '20' }]}>
+              <Text style={[styles.categoryBadgeText, { color: COLORS[bag.category] }]}>
+                {bag.category.charAt(0).toUpperCase() + bag.category.slice(1)}
+              </Text>
+            </View>
+          </View>
           <Text style={styles.businessName}>{bag.business}</Text>
         </View>
         <View style={styles.bagPrice}>
@@ -130,10 +137,16 @@ const DiscoverScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.bagFooter}>
-        <View style={styles.discountBadge}>
-          <Text style={styles.discountText}>
-            {Math.round(((bag.originalPrice - bag.price) / bag.originalPrice) * 100)}% OFF
-          </Text>
+        <View style={styles.bagFooterLeft}>
+          <View style={styles.discountBadge}>
+            <Text style={styles.discountText}>
+              {Math.round(((bag.originalPrice - bag.price) / bag.originalPrice) * 100)}% OFF
+            </Text>
+          </View>
+          <View style={styles.ratingContainer}>
+            <Text style={styles.ratingIcon}>⭐</Text>
+            <Text style={styles.ratingText}>{bag.rating}</Text>
+          </View>
         </View>
         <TouchableOpacity style={styles.reserveButton} activeOpacity={0.8}>
           <Text style={styles.reserveButtonText}>Reserve Now</Text>
@@ -312,11 +325,27 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: SPACING.md,
   },
+  bagTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: SPACING.xs,
+    flexWrap: 'wrap',
+  },
   bagTitle: {
     fontSize: SIZES.title3,
     fontFamily: FONTS.bold,
     color: COLORS.textPrimary,
-    marginBottom: SPACING.xs,
+    marginRight: SPACING.sm,
+    flex: 1,
+  },
+  categoryBadge: {
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.xs,
+    borderRadius: SIZES.radius,
+  },
+  categoryBadgeText: {
+    fontSize: SIZES.caption2,
+    fontFamily: FONTS.bold,
   },
   businessName: {
     fontSize: SIZES.body,
@@ -361,16 +390,39 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  bagFooterLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
   discountBadge: {
     backgroundColor: COLORS.success + '20',
     paddingHorizontal: SPACING.sm,
     paddingVertical: SPACING.xs,
     borderRadius: SIZES.radius,
+    marginRight: SPACING.sm,
   },
   discountText: {
     fontSize: SIZES.caption1,
     fontFamily: FONTS.bold,
     color: COLORS.success,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.lightGray,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.xs,
+    borderRadius: SIZES.radius,
+  },
+  ratingIcon: {
+    fontSize: 12,
+    marginRight: SPACING.xs,
+  },
+  ratingText: {
+    fontSize: SIZES.caption1,
+    fontFamily: FONTS.bold,
+    color: COLORS.textPrimary,
   },
   reserveButton: {
     backgroundColor: COLORS.primary,

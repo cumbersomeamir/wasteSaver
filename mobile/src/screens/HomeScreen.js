@@ -58,13 +58,16 @@ const HomeScreen = ({ navigation }) => {
       key={index}
       style={[styles.actionCard, { backgroundColor: action.color + '15' }]}
       onPress={action.onPress}
-      activeOpacity={0.8}
+      activeOpacity={0.7}
     >
-      <View style={[styles.actionIconContainer, { backgroundColor: action.color + '20' }]}>
+      <View style={[styles.actionIconContainer, { backgroundColor: action.color + '25' }]}>
         <Text style={styles.actionIcon}>{action.icon}</Text>
       </View>
       <Text style={styles.actionTitle}>{action.title}</Text>
       <Text style={styles.actionSubtitle}>{action.subtitle}</Text>
+      <View style={[styles.actionBadge, { backgroundColor: action.color + '30' }]}>
+        <Text style={[styles.actionBadgeText, { color: action.color }]}>→</Text>
+      </View>
     </TouchableOpacity>
   );
 
@@ -81,6 +84,9 @@ const HomeScreen = ({ navigation }) => {
           </View>
           <Text style={styles.impactValue}>${user?.totalSaved || 0}</Text>
           <Text style={styles.impactLabel}>Money Saved</Text>
+          <View style={[styles.impactTrend, { backgroundColor: COLORS.moneySaved + '10' }]}>
+            <Text style={[styles.impactTrendText, { color: COLORS.moneySaved }]}>↗ +12%</Text>
+          </View>
         </View>
         <View style={styles.impactStat}>
           <View style={[styles.impactStatIcon, { backgroundColor: COLORS.co2Saved + '20' }]}>
@@ -88,6 +94,9 @@ const HomeScreen = ({ navigation }) => {
           </View>
           <Text style={styles.impactValue}>{user?.totalCO2eSaved || 0}kg</Text>
           <Text style={styles.impactLabel}>CO₂ Saved</Text>
+          <View style={[styles.impactTrend, { backgroundColor: COLORS.co2Saved + '10' }]}>
+            <Text style={[styles.impactTrendText, { color: COLORS.co2Saved }]}>↗ +8%</Text>
+          </View>
         </View>
         <View style={styles.impactStat}>
           <View style={[styles.impactStatIcon, { backgroundColor: COLORS.waterSaved + '20' }]}>
@@ -95,6 +104,9 @@ const HomeScreen = ({ navigation }) => {
           </View>
           <Text style={styles.impactValue}>{user?.totalWaterSaved || 0}L</Text>
           <Text style={styles.impactLabel}>Water Saved</Text>
+          <View style={[styles.impactTrend, { backgroundColor: COLORS.waterSaved + '10' }]}>
+            <Text style={[styles.impactTrendText, { color: COLORS.waterSaved }]}>↗ +15%</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -263,6 +275,16 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.regular,
     color: COLORS.textSecondary,
     textAlign: 'center',
+    marginBottom: SPACING.xs,
+  },
+  impactTrend: {
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.xs,
+    borderRadius: SIZES.radius,
+  },
+  impactTrendText: {
+    fontSize: SIZES.caption2,
+    fontFamily: FONTS.bold,
   },
   section: {
     marginBottom: SPACING.lg,
@@ -286,15 +308,16 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius * 1.2,
     alignItems: 'center',
     marginBottom: SPACING.md,
+    position: 'relative',
     ...Platform.select({
       ios: {
         shadowColor: COLORS.shadow,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.12,
+        shadowRadius: 6,
       },
       android: {
-        elevation: 3,
+        elevation: 4,
       },
     }),
   },
@@ -321,6 +344,21 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.regular,
     color: COLORS.textSecondary,
     textAlign: 'center',
+    marginBottom: SPACING.sm,
+  },
+  actionBadge: {
+    position: 'absolute',
+    top: SPACING.sm,
+    right: SPACING.sm,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionBadgeText: {
+    fontSize: 12,
+    fontFamily: FONTS.bold,
   },
   activityCard: {
     marginHorizontal: SPACING.screenPadding,
